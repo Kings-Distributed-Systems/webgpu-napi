@@ -59,29 +59,6 @@
     "bind group": {
         "category": "object"
     },
-    "ray tracing acceleration container": {
-        "category": "object",
-        "methods": [
-            {
-                "name": "destroy"
-            },
-            {
-                "name": "update instance",
-                "args": [
-                    {"name": "instance index", "type": "uint32_t"},
-                    {"name": "descriptor", "type": "ray tracing acceleration instance descriptor", "annotation": "const*"}
-                ]
-            }
-        ]
-    },
-    "ray tracing shader binding table": {
-        "category": "object",
-        "methods": [
-            {
-                "name": "destroy"
-            }
-        ]
-    },
     "bind group entry": {
         "category": "structure",
         "extensible": false,
@@ -91,172 +68,7 @@
             {"name": "offset", "type": "uint64_t", "default": "0"},
             {"name": "size", "type": "uint64_t"},
             {"name": "sampler", "type": "sampler", "optional": true},
-            {"name": "texture view", "type": "texture view", "optional": true},
-            {"name": "acceleration container", "type": "ray tracing acceleration container", "optional": true}
-        ]
-    },
-    "ray tracing acceleration geometry type": {
-        "category": "enum",
-        "values": [
-            {"value": 0, "name": "triangles"},
-            {"value": 1, "name": "aabbs"}
-        ]
-    },
-    "ray tracing acceleration geometry flag": {
-        "category": "bitmask",
-        "values": [
-            {"value": 0, "name": "none"},
-            {"value": 1, "name": "opaque"},
-            {"value": 2, "name": "allow any hit"}
-        ]
-    },
-    "ray tracing acceleration instance flag": {
-        "category": "bitmask",
-        "values": [
-            {"value": 0, "name": "none"},
-            {"value": 1, "name": "triangle cull disable"},
-            {"value": 2, "name": "triangle front counterclockwise"},
-            {"value": 4, "name": "force opaque"},
-            {"value": 8, "name": "force no opaque"}
-        ]
-    },
-    "ray tracing acceleration container flag": {
-        "category": "bitmask",
-        "values": [
-            {"value": 0, "name": "none"},
-            {"value": 1, "name": "allow update"},
-            {"value": 2, "name": "prefer fast trace"},
-            {"value": 4, "name": "prefer fast build"},
-            {"value": 8, "name": "low memory"}
-        ]
-    },
-    "ray tracing acceleration container level": {
-        "category": "enum",
-        "values": [
-            {"value": 0, "name": "bottom"},
-            {"value": 1, "name": "top"}
-        ]
-    },
-    "ray tracing shader binding table group type": {
-        "category": "enum",
-        "values": [
-            {"value": 0, "name": "general"},
-            {"value": 1, "name": "triangles hit group"},
-            {"value": 2, "name": "procedural hit group"}
-        ]
-    },
-    "ray tracing acceleration geometry vertex descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "buffer", "type": "buffer"},
-            {"name": "format", "type": "vertex format"},
-            {"name": "stride", "type": "uint32_t"},
-            {"name": "offset", "type": "uint32_t", "default": "0"},
-            {"name": "count", "type": "uint32_t"}
-        ]
-    },
-    "ray tracing acceleration geometry index descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "buffer", "type": "buffer"},
-            {"name": "format", "type": "index format"},
-            {"name": "offset", "type": "uint32_t", "default": "0"},
-            {"name": "count", "type": "uint32_t"}
-        ]
-    },
-    "ray tracing acceleration geometry aabb descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "buffer", "type": "buffer"},
-            {"name": "stride", "type": "uint32_t"},
-            {"name": "offset", "type": "uint32_t", "default": "0"},
-            {"name": "count", "type": "uint32_t"}
-        ]
-    },
-    "ray tracing acceleration geometry descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "flags", "type": "ray tracing acceleration geometry flag", "default": "none"},
-            {"name": "type", "type": "ray tracing acceleration geometry type", "default": "triangles"},
-            {"name": "vertex", "type": "ray tracing acceleration geometry vertex descriptor", "annotation": "const*", "optional": true},
-            {"name": "index", "type": "ray tracing acceleration geometry index descriptor", "annotation": "const*", "optional": true},
-            {"name": "aabb", "type": "ray tracing acceleration geometry aabb descriptor", "annotation": "const*", "optional": true}
-        ]
-    },
-    "transform 3D": {
-        "category": "structure",
-        "members": [
-            {"name": "x", "type": "float", "default": "0.0f"},
-            {"name": "y", "type": "float", "default": "0.0f"},
-            {"name": "z", "type": "float", "default": "0.0f"}
-        ]
-    },
-    "ray tracing acceleration instance transform descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "translation", "type": "transform 3D", "annotation": "const*", "optional": true},
-            {"name": "rotation", "type": "transform 3D", "annotation": "const*", "optional": true},
-            {"name": "scale", "type": "transform 3D", "annotation": "const*", "optional": true}
-        ]
-    },
-    "ray tracing acceleration instance descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "flags", "type": "ray tracing acceleration instance flag", "default": "none"},
-            {"name": "mask", "type": "uint32_t", "default": "0xFF"},
-            {"name": "instance id", "type": "uint32_t", "default": "0"},
-            {"name": "instance offset", "type": "uint32_t", "default": "0"},
-            {"name": "transform", "type": "ray tracing acceleration instance transform descriptor", "annotation": "const*", "optional": true},
-            {"name": "transform matrix size", "type": "uint32_t", "default": "12"},
-            {"name": "transform matrix", "type": "float", "annotation": "const*", "length": "transform matrix size", "optional": true},
-            {"name": "geometry container", "type": "ray tracing acceleration container"}
-        ]
-    },
-    "ray tracing acceleration container descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "flags", "type": "ray tracing acceleration container flag", "default": "none"},
-            {"name": "level", "type": "ray tracing acceleration container level", "default": "bottom"},
-            {"name": "geometry count", "type": "uint32_t", "default": "0"},
-            {"name": "geometries", "type": "ray tracing acceleration geometry descriptor", "annotation": "const*", "length": "geometry count", "optional": true},
-            {"name": "instance count", "type": "uint32_t", "default": "0"},
-            {"name": "instances", "type": "ray tracing acceleration instance descriptor", "annotation": "const*", "length": "instance count", "optional": true}
-        ]
-    },
-    "ray tracing shader binding table stages descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "stage", "type": "shader stage"},
-            {"name": "module", "type": "shader module"}
-        ]
-    },
-    "ray tracing shader binding table groups descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "type", "type": "ray tracing shader binding table group type", "default": "general"},
-            {"name": "general index", "type": "int32_t", "default": "-1"},
-            {"name": "closest hit index", "type": "int32_t", "default": "-1"},
-            {"name": "any hit index", "type": "int32_t", "default": "-1"},
-            {"name": "intersection index", "type": "int32_t", "default": "-1"}
-        ]
-    },
-    "ray tracing shader binding table descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "stages count", "type": "uint32_t", "default": "0"},
-            {"name": "stages", "type": "ray tracing shader binding table stages descriptor", "annotation": "const*", "length": "stages count"},
-            {"name": "groups count", "type": "uint32_t", "default": "0"},
-            {"name": "groups", "type": "ray tracing shader binding table groups descriptor", "annotation": "const*", "length": "groups count"}
+            {"name": "texture view", "type": "texture view", "optional": true}
         ]
     },
     "bind group descriptor": {
@@ -311,8 +123,7 @@
             {"value": 5, "name": "sampled texture"},
             {"value": 6, "name": "storage texture"},
             {"value": 7, "name": "readonly storage texture"},
-            {"value": 8, "name": "writeonly storage texture"},
-            {"value": 9, "name": "acceleration container"}
+            {"value": 8, "name": "writeonly storage texture"}
         ]
     },
     "blend descriptor": {
@@ -458,8 +269,7 @@
             {"value": 32, "name": "vertex"},
             {"value": 64, "name": "uniform"},
             {"value": 128, "name": "storage"},
-            {"value": 256, "name": "indirect"},
-            {"value": 512, "name": "ray tracing"}
+            {"value": 256, "name": "indirect"}
         ]
     },
     "char": {
@@ -521,36 +331,10 @@
                 ]
             },
             {
-                "name": "begin ray tracing pass",
-                "returns": "ray tracing pass encoder",
-                "args": [
-                    {"name": "descriptor", "type": "ray tracing pass descriptor", "annotation": "const*"}
-                ]
-            },
-            {
                 "name": "begin render pass",
                 "returns": "render pass encoder",
                 "args": [
                     {"name": "descriptor", "type": "render pass descriptor", "annotation": "const*"}
-                ]
-            },
-            {
-                "name": "build ray tracing acceleration container",
-                "args": [
-                    {"name": "container", "type": "ray tracing acceleration container"}
-                ]
-            },
-            {
-                "name": "copy ray tracing acceleration container",
-                "args": [
-                    {"name": "src container", "type": "ray tracing acceleration container"},
-                    {"name": "dst container", "type": "ray tracing acceleration container"}
-                ]
-            },
-            {
-                "name": "update ray tracing acceleration container",
-                "args": [
-                    {"name": "container", "type": "ray tracing acceleration container"}
                 ]
             },
             {
@@ -711,92 +495,6 @@
             {"name": "compute stage", "type": "programmable stage descriptor"}
         ]
     },
-    "ray tracing pass descriptor": {
-        "category": "structure",
-        "extensible": true,
-        "members": [
-            {"name": "label", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
-        ]
-    },
-    "ray tracing pass encoder": {
-        "category": "object",
-        "methods": [
-            {
-                "name": "insert debug marker",
-                "args": [
-                    {"name": "group label", "type": "char", "annotation": "const*", "length": "strlen"}
-                ]
-            },
-            {
-                "name": "pop debug group",
-                "args": []
-            },
-            {
-                "name": "push debug group",
-                "args": [
-                    {"name": "group label", "type": "char", "annotation": "const*", "length": "strlen"}
-                ]
-            },
-            {
-                "name": "set pipeline",
-                "args": [
-                    {"name": "pipeline", "type": "ray tracing pipeline"}
-                ]
-            },
-            {
-                "name": "set bind group",
-                "args": [
-                    {"name": "group index", "type": "uint32_t"},
-                    {"name": "group", "type": "bind group"},
-                    {"name": "dynamic offset count", "type": "uint32_t", "default": "0"},
-                    {"name": "dynamic offsets", "type": "uint32_t", "annotation": "const*", "length": "dynamic offset count", "optional": true}
-                ]
-            },
-            {
-                "name": "trace rays",
-                "args": [
-                    {"name": "ray generation offset", "type": "uint32_t"},
-                    {"name": "ray hit offset", "type": "uint32_t"},
-                    {"name": "ray miss offset", "type": "uint32_t"},
-                    {"name": "width", "type": "uint32_t"},
-                    {"name": "height", "type": "uint32_t"},
-                    {"name": "depth", "type": "uint32_t", "default": "1"}
-                ]
-            },
-            {
-                "name": "end pass"
-            }
-        ]
-    },
-    "ray tracing pipeline": {
-        "category": "object",
-        "methods": [
-            {
-                "name": "get bind group layout",
-                "returns": "bind group layout",
-                "args": [
-                    {"name": "group", "type": "uint32_t"}
-                ]
-            }
-        ]
-    },
-    "ray tracing state descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "shader binding table", "type": "ray tracing shader binding table"},
-            {"name": "max recursion depth", "type": "uint32_t", "default": "1"}
-        ]
-    },
-    "ray tracing pipeline descriptor": {
-        "category": "structure",
-        "extensible": false,
-        "members": [
-            {"name": "label", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
-            {"name": "layout", "type": "pipeline layout", "optional": true},
-            {"name": "ray tracing state", "type": "ray tracing state descriptor", "annotation": "const*"}
-        ]
-    },
     "cull mode": {
         "category": "enum",
         "values": [
@@ -808,27 +506,6 @@
     "device": {
         "category": "object",
         "methods": [
-            {
-                "name": "create ray tracing acceleration container",
-                "returns": "ray tracing acceleration container",
-                "args": [
-                    {"name": "descriptor", "type": "ray tracing acceleration container descriptor", "annotation": "const*"}
-                ]
-            },
-            {
-                "name": "create ray tracing shader binding table",
-                "returns": "ray tracing shader binding table",
-                "args": [
-                    {"name": "descriptor", "type": "ray tracing shader binding table descriptor", "annotation": "const*"}
-                ]
-            },
-            {
-                "name": "create ray tracing pipeline",
-                "returns": "ray tracing pipeline",
-                "args": [
-                    {"name": "descriptor", "type": "ray tracing pipeline descriptor", "annotation": "const*"}
-                ]
-            },
             {
                 "name": "create bind group",
                 "returns": "bind group",
@@ -984,8 +661,7 @@
         "category": "structure",
         "extensible": false,
         "members": [
-            {"name": "texture compression BC", "type": "bool", "default": "false"},
-            {"name": "ray tracing", "type": "bool", "default": "false"}
+            {"name": "texture compression BC", "type": "bool", "default": "false"}
         ]
     },
     "depth stencil state descriptor": {
@@ -1097,8 +773,7 @@
         "category": "enum",
         "values": [
             {"value": 0, "name": "uint16"},
-            {"value": 1, "name": "uint32"},
-            {"value": 2, "name": "none"}
+            {"value": 1, "name": "uint32"}
         ]
     },
     "instance": {
@@ -1629,12 +1304,7 @@
             {"value": 0, "name": "none"},
             {"value": 1, "name": "vertex"},
             {"value": 2, "name": "fragment"},
-            {"value": 4, "name": "compute"},
-            {"value": 8, "name": "ray generation"},
-            {"value": 16, "name": "ray any hit"},
-            {"value": 32, "name": "ray closest hit"},
-            {"value": 64, "name": "ray miss"},
-            {"value": 128, "name": "ray intersection"}
+            {"value": 4, "name": "compute"}
         ]
     },
     "stencil operation": {
