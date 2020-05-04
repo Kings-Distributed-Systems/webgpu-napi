@@ -12,9 +12,7 @@
 #include "GPURenderPipeline.h"
 #include "GPUCommandEncoder.h"
 #include "GPURenderBundleEncoder.h"
-#include "GPURayTracingAccelerationContainer.h"
-#include "GPURayTracingShaderBindingTable.h"
-#include "GPURayTracingPipeline.h"
+
 
 #include "WebGPUWindow.h"
 
@@ -164,32 +162,8 @@ Napi::Value GPUDevice::tick(const Napi::CallbackInfo& info) {
   return env.Undefined();
 }
 
-Napi::Value GPUDevice::createRayTracingAccelerationContainer(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  Napi::Object accelerationContainer = GPURayTracingAccelerationContainer::constructor.New({
-    info.This().As<Napi::Value>(),
-    info[0].As<Napi::Value>()
-  });
-  return accelerationContainer;
-}
 
-Napi::Value GPUDevice::createRayTracingShaderBindingTable(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  Napi::Object shaderBindingTable = GPURayTracingShaderBindingTable::constructor.New({
-    info.This().As<Napi::Value>(),
-    info[0].As<Napi::Value>()
-  });
-  return shaderBindingTable;
-}
 
-Napi::Value GPUDevice::createRayTracingPipeline(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  Napi::Object rayTracingPipeline = GPURayTracingPipeline::constructor.New({
-    info.This().As<Napi::Value>(),
-    info[0].As<Napi::Value>()
-  });
-  return rayTracingPipeline;
-}
 
 Napi::Value GPUDevice::createBuffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
