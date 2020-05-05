@@ -55,6 +55,8 @@ function writeGeneratedFile(path, text, includeNotice = true) {
 
 async function generateBindings(version, enableMinification, includeMemoryLayouts) {
   // copy dawn.json specification from dawn folder into into specification folder
+  console.log("*** __dirname "+__dirname);
+  console.log("*** process.cwd() "+process.cwd());
   fs.copyFileSync(
     DAWN_PATH + "/dawn.json",
     pkg.config.SPEC_DIR + `/${version}.json`
