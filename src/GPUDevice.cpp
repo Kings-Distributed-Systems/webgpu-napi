@@ -346,21 +346,6 @@ Napi::Object GPUDevice::Initialize(Napi::Env env, Napi::Object exports) {
       napi_enumerable
     ),
     InstanceMethod(
-      "createRayTracingAccelerationContainer",
-      &GPUDevice::createRayTracingAccelerationContainer,
-      napi_enumerable
-    ),
-    InstanceMethod(
-      "createRayTracingShaderBindingTable",
-      &GPUDevice::createRayTracingShaderBindingTable,
-      napi_enumerable
-    ),
-    InstanceMethod(
-      "createRayTracingPipeline",
-      &GPUDevice::createRayTracingPipeline,
-      napi_enumerable
-    ),
-    InstanceMethod(
       "createBuffer",
       &GPUDevice::createBuffer,
       napi_enumerable

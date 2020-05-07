@@ -99,118 +99,10 @@ Object.assign(global, glMatrix);
   });
   triangleIndexBuffer.setSubData(0, triangleIndices);
 
-  // create a geometry container
-  // which holds references to our geometry buffers
-  let geometryContainer = device.createRayTracingAccelerationContainer({
-    level: "bottom",
-    flags: GPURayTracingAccelerationContainerFlag.PREFER_FAST_TRACE,
-    geometries: [
-      {
-        flags: GPURayTracingAccelerationGeometryFlag.OPAQUE,
-        type: "triangles",
-        vertex: {
-          buffer: triangleVertexBuffer,
-          format: "float3",
-          stride: 3 * Float32Array.BYTES_PER_ELEMENT,
-          count: triangleVertices.length
-        },
-        index: {
-          buffer: triangleIndexBuffer,
-          format: "uint32",
-          count: triangleIndices.length
-        }
-      }
-    ]
-  });
 
-  // create an instance container
-  // which contains object instances with transforms
-  // and links to a geometry container to be used
-  let instanceContainer = device.createRayTracingAccelerationContainer({
-    level: "top",
-    flags: GPURayTracingAccelerationContainerFlag.PREFER_FAST_TRACE,
-    instances: [
-      {
-        flags: GPURayTracingAccelerationInstanceFlag.TRIANGLE_CULL_DISABLE,
-        mask: 0xFF,
-        instanceId: 0,
-        instanceOffset: 0x0,
-        transform: {
-          translation: { x: 0, y: 0, z: 0 },
-          rotation: { x: 0, y: 0, z: 0 },
-          scale: { x: 1, y: 1, z: 1 }
-        },
-        geometryContainer: geometryContainer
-      }
-    ]
-  });
 
-  // first build all bottom-level containers
-  {
-    let commandEncoder = device.createCommandEncoder({});
-    commandEncoder.buildRayTracingAccelerationContainer(geometryContainer);
-    queue.submit([ commandEncoder.finish() ]);
-  }
 
-  // now we can build the top-level containers
-  // building them in separate passes is important
-  {
-    let commandEncoder = device.createCommandEncoder({});
-    commandEncoder.buildRayTracingAccelerationContainer(instanceContainer);
-    queue.submit([ commandEncoder.finish() ]);
-  }
 
-  // a collection of shader modules which get dynamically
-  // invoked, for example when calling traceNV
-  let shaderBindingTable = device.createRayTracingShaderBindingTable({
-    // stages are a collection of shaders
-    // which get indexed in groups
-    stages: [
-      {
-        module: rayGenShaderModule,
-        stage: GPUShaderStage.RAY_GENERATION
-      },
-      {
-        module: rayCHitShaderModule,
-        stage: GPUShaderStage.RAY_CLOSEST_HIT
-      },
-      {
-        module: rayMissShaderModule,
-        stage: GPUShaderStage.RAY_MISS
-      }
-    ],
-    // groups can index the shaders in stages
-    // generalIndex: ray generation or ray miss stage index
-    // anyHitIndex: ray any-hit stage index
-    // closestHitIndex: ray closest-hit stage index
-    // intersectionIndex: ray intersection stage index
-    groups: [
-      // generation group
-      {
-        type: "general",
-        generalIndex: 0, // ray generation shader index
-        anyHitIndex: -1,
-        closestHitIndex: -1,
-        intersectionIndex: -1
-      },
-      // hit group
-      {
-        type: "triangles-hit-group",
-        generalIndex: -1,
-        anyHitIndex: -1,
-        closestHitIndex: 1, // ray closest-hit shader index
-        intersectionIndex: -1
-      },
-      // miss group
-      {
-        type: "general",
-        generalIndex: 2, // ray miss shader index
-        anyHitIndex: -1,
-        closestHitIndex: -1,
-        intersectionIndex: -1
-      }
-    ]
-  });
 
   let rtBindGroupLayout = device.createBindGroupLayout({
     entries: [
@@ -276,15 +168,6 @@ Object.assign(global, glMatrix);
     ]
   });
 
-  let rtPipeline = device.createRayTracingPipeline({
-    layout: device.createPipelineLayout({
-      bindGroupLayouts: [rtBindGroupLayout]
-    }),
-    rayTracingState: {
-      shaderBindingTable,
-      maxRecursionDepth: 1
-    }
-  });
 
   let resolutionData = new Float32Array([
     window.width, window.height
@@ -362,24 +245,7 @@ Object.assign(global, glMatrix);
 
     let backBufferView = swapChain.getCurrentTextureView();
 
-    // ray tracing pass
-    {
-      let commandEncoder = device.createCommandEncoder({});
-      let passEncoder = commandEncoder.beginRayTracingPass({});
-      passEncoder.setPipeline(rtPipeline);
-      passEncoder.setBindGroup(0, rtBindGroup);
-      passEncoder.traceRays(
-        0, // sbt ray-generation offset
-        1, // sbt ray-hit offset
-        2, // sbt ray-miss offset
-        window.width,  // query width dimension
-        window.height, // query height dimension
-        1              // query depth dimension
-      );
-      passEncoder.endPass();
-      queue.submit([ commandEncoder.finish() ]);
 
-    }
     // rasterization pass
     // the rasterization's pass only use right now,
     // is to bring the pixel buffer we write into from the

@@ -168,26 +168,6 @@ Napi::Object GPUCommandEncoder::Initialize(Napi::Env env, Napi::Object exports) 
       napi_enumerable
     ),
     InstanceMethod(
-      "beginRayTracingPass",
-      &GPUCommandEncoder::beginRayTracingPass,
-      napi_enumerable
-    ),
-    InstanceMethod(
-      "buildRayTracingAccelerationContainer",
-      &GPUCommandEncoder::buildRayTracingAccelerationContainer,
-      napi_enumerable
-    ),
-    InstanceMethod(
-      "copyRayTracingAccelerationContainer",
-      &GPUCommandEncoder::copyRayTracingAccelerationContainer,
-      napi_enumerable
-    ),
-    InstanceMethod(
-      "updateRayTracingAccelerationContainer",
-      &GPUCommandEncoder::updateRayTracingAccelerationContainer,
-      napi_enumerable
-    ),
-    InstanceMethod(
       "copyBufferToBuffer",
       &GPUCommandEncoder::copyBufferToBuffer,
       napi_enumerable
