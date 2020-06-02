@@ -118,9 +118,7 @@ function copyFiles() {
       // copy single files
       let fileName = source.replace(/^.*[\\\/]/, "");
       let isFile = fileName.length > 0;
-      
-      if (isFile) target += "/" + fileName.replace(/.so/g,'.a');
-
+      if (isFile) target += "/" + fileName;
       // copy
       ncp(source, target, error => {
         process.stdout.write(`Copying ${source} -> ${target}\n`);
