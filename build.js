@@ -121,7 +121,6 @@ function copyFiles() {
       
       if (isFile) target += "/" + fileName.replace(/.so/g,'.a');
 
-      process.stdout.write(target+'\n');
       // copy
       ncp(source, target, error => {
         process.stdout.write(`Copying ${source} -> ${target}\n`);
