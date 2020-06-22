@@ -20,7 +20,7 @@
   "devDependencies": {
     "gl-matrix": "^3.3.0",
     "ncp": "^2.0.0",
-    "node-addon-api": "^1.7.1",
+    "node-addon-api": "^3.0.0",
     "nunjucks": "^3.2.0"
   },
   "dependencies": {},
