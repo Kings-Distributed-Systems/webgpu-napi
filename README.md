@@ -1,5 +1,5 @@
 <p align="center">
-  <c>This is a WebGPU API for native JavaScript, based on a <a href="https://github.com/maierfelix/dawn-ray-tracing">Fork</a> of Chromium's <a href="https://dawn.googlesource.com/dawn/">Dawn Project</a>.
+  <c>This is a WebGPU API for native JavaScript, based on the offical Chromium <a href="https://dawn.googlesource.com/dawn/">Dawn Project</a>.
   </c>
   <br/>
   <br/>
