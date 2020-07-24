@@ -60,17 +60,16 @@ In case python wasn't found:
 
 ### Linux 
 
-Follow dawn's initial setup instructions, but instead of the standard build, do the following:
+Linux has a streamlined method to integrate with CTS testing:
+- Run the build.sh script
+- This will build against a NAPI stable version of Dawn
+- Will also set your LD\_LIBRARY\_PATH to the built Dawn shared libraries
+- Copy the built addon eg: 
 
-To generate the project as a shared library:
 ````
-gn gen out/Shared --target_cpu="x64" --args="is_component_build=true is_debug=false is_clang=true"
+cp generated/0.0.1/linux/build/Release/addon-linux.node ~/git/cts/third_party/dawn/linux/index.node
 ````
 
-To build the project run:
-````
-ninja -C out/Shared
-````
 
 ### MacOS
 
