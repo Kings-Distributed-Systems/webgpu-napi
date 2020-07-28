@@ -175,16 +175,29 @@ Napi::Value GPUDevice::createBuffer(const Napi::CallbackInfo& info) {
 }
 
 Napi::Value GPUDevice::createBufferMapped(const Napi::CallbackInfo &info) {
+
   Napi::Env env = info.Env();
+
   Napi::Object buffer = GPUBuffer::constructor.New({
     info.This().As<Napi::Value>(),
     info[0].As<Napi::Value>()
   });
-  GPUBuffer* uwBuffer = Napi::ObjectWrap<GPUBuffer>::Unwrap(buffer);
-  Napi::Value arrBuffer = uwBuffer->mapReadAsync(info);
-  Napi::Array out = Napi::Array::New(env);
-  out.Set(Napi::Number::New(env, 0), buffer);
-  out.Set(Napi::Number::New(env, 1), arrBuffer);
+
+  auto descriptor = DescriptorDecoder::GPUBufferDescriptor(this, info[1].As<Napi::Value>());
+
+  WGPUCreateBufferMappedResult result = wgpuDeviceCreateBufferMapped(this->instance, &descriptor);
+
+  Napi::ArrayBuffer arrBuffer = Napi::ArrayBuffer::New(
+    env,
+    result.buffer,
+    result.dataLength,
+    [](Napi::Env env, void* data) { }
+  );
+
+  Napi::Array out = Napi::Array::New(env,2);
+  out.Set(0U, buffer);
+  out.Set(1U, arrBuffer);
+
   return out;
 }
 

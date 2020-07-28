@@ -60,6 +60,7 @@ build Shared
 cd ..
 
 echo -n "$PWD/dawn" > PATH_TO_DAWN
+
 npm install
 npm run all --dawnversion=0.0.1
 
