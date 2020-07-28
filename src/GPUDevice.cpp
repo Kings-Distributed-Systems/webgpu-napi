@@ -161,9 +161,6 @@ Napi::Value GPUDevice::tick(const Napi::CallbackInfo& info) {
   return env.Undefined();
 }
 
-
-
-
 Napi::Value GPUDevice::createBuffer(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   Napi::Object buffer = GPUBuffer::constructor.New({
@@ -203,7 +200,6 @@ Napi::Value GPUDevice::createBufferMapped(const Napi::CallbackInfo &info) {
   out[0U] = buffer;
   out[1U] = arrBuffer;
 
-  std::cout << result.dataLength << std::endl;
   return out;
 }
 

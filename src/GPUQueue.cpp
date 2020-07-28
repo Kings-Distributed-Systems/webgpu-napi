@@ -56,7 +56,7 @@ Napi::Value GPUQueue::signal(const Napi::CallbackInfo &info) {
 
   WGPUFence fence = Napi::ObjectWrap<GPUFence>::Unwrap(info[0].ToObject())->instance;
 
-  uint64_t signalValue = static_cast<uint64_t>(info[0].As<Napi::Number>().Uint32Value());
+  uint64_t signalValue = static_cast<uint64_t>(info[1].As<Napi::Number>().Uint32Value());
   wgpuQueueSignal(this->instance, fence, signalValue);
 
   return env.Undefined();
