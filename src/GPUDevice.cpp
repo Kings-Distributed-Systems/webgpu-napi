@@ -12,11 +12,10 @@
 #include "GPURenderPipeline.h"
 #include "GPUCommandEncoder.h"
 #include "GPURenderBundleEncoder.h"
-
-
 #include "WebGPUWindow.h"
-
 #include "DescriptorDecoder.h"
+
+#include <iostream>
 
 Napi::FunctionReference GPUDevice::constructor;
 
@@ -183,21 +182,25 @@ Napi::Value GPUDevice::createBufferMapped(const Napi::CallbackInfo &info) {
     info[0].As<Napi::Value>()
   });
 
-  auto descriptor = DescriptorDecoder::GPUBufferDescriptor(this, info[1].As<Napi::Value>());
+
+  auto descriptor = DescriptorDecoder::GPUBufferDescriptor(this, info[0].As<Napi::Value>());
 
   WGPUCreateBufferMappedResult result = wgpuDeviceCreateBufferMapped(this->instance, &descriptor);
 
+  Napi::ObjectWrap<GPUBuffer>::Unwrap(buffer)->instance = result.buffer;
+
   Napi::ArrayBuffer arrBuffer = Napi::ArrayBuffer::New(
     env,
-    result.buffer,
+    result.data,
     result.dataLength,
     [](Napi::Env env, void* data) { }
   );
 
-  Napi::Array out = Napi::Array::New(env,2);
-  out.Set(0U, buffer);
-  out.Set(1U, arrBuffer);
+  Napi::Array out = Napi::Array::New(env);
+  out[0U] = buffer;
+  out[1U] = arrBuffer;
 
+  std::cout << result.dataLength << std::endl;
   return out;
 }
 
