@@ -177,7 +177,7 @@ Napi::Value GPUDevice::createBufferMapped(const Napi::CallbackInfo &info) {
 
   Napi::Env env = info.Env();
 
-  Napi::Object buffer = GPUBuffer::constructor.New({
+   Napi::Object buffer = GPUBuffer::constructor.New({
     info.This().As<Napi::Value>(),
     info[0].As<Napi::Value>()
   });
@@ -195,6 +195,9 @@ Napi::Value GPUDevice::createBufferMapped(const Napi::CallbackInfo &info) {
     result.dataLength,
     [](Napi::Env env, void* data) { }
   );
+
+  Napi::Array mappingArray = Napi::ObjectWrap<GPUBuffer>::Unwrap(buffer)->mappingArrayBuffers.Value().As<Napi::Array>();
+  mappingArray[mappingArray.Length()] = arrBuffer;
 
   Napi::Array out = Napi::Array::New(env);
   out[0U] = buffer;
