@@ -16,11 +16,17 @@ if [ ! -d depot_tools ]; then
   git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 fi
 export PATH=${PWD}/depot_tools:$PATH
+
 if [ ! -d dawn ]; then
   echo "Fetching Dawn..."
   git clone https://dawn.googlesource.com/dawn dawn
-
 fi
+
+if [ ! -d examples ]; then
+  echo "Fetching examples..."
+  git clone https://github.com/maierfelix/webgpu-examples examples
+fi
+
 
 cd dawn
 echo "Checking out ..."
@@ -64,5 +70,14 @@ echo -n "$PWD/dawn" > PATH_TO_DAWN
 npm install
 npm run all --dawnversion=0.0.1
 
-LD_LIBRARY_PATH=$PWD/generated/0.0.1/linux/build/Release $SHELL
+cd examples
+npm install
+echo $PWD
+rm -r ./node_modules/webgpu/generated/0.0.1/linux/build/Release
+mkdir ./node_modules/webgpu/generated/0.0.1/linux/build/Release
 
+cd ..
+cp  ./generated/0.0.1/linux/build/Release/addon-linux.node ./examples/node_modules/webgpu/generated/0.0.1/linux/build/Release/addon-linux.node
+echo "Examples now using this WebGPU-NAPI addon instead of the npm version."
+
+LD_LIBRARY_PATH=$PWD/generated/0.0.1/linux/build/Release $SHELL
