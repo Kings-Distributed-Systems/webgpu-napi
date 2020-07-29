@@ -102,6 +102,3 @@ examples-dev
 generated/*/*/build/.vs
 /.project
 /PATH_TO_DAWN
-
-dawn
-depot_tools
