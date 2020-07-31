@@ -80,4 +80,12 @@ cd ..
 cp  ./generated/0.0.1/linux/build/Release/addon-linux.node ./examples/node_modules/webgpu/generated/0.0.1/linux/build/Release/addon-linux.node
 echo "Examples now using this WebGPU-NAPI addon instead of the npm version."
 
+echo "Initializing CTS"
+cp generated/0.0.1/linux/build/Release/addon-linux.node cts/third_party/dawn/linux/index.node
+cd cts
+npm install
+npx grunt pre
+
+echo "Done! Setting LD_LIBRARY_PATH for Dawn and returning to shell"
+cd ..
 LD_LIBRARY_PATH=$PWD/generated/0.0.1/linux/build/Release $SHELL
