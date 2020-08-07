@@ -27,6 +27,7 @@ if [ ! -d examples ]; then
   git clone https://github.com/maierfelix/webgpu-examples examples
 fi
 
+git submodule sync
 
 cd dawn
 echo "Checking out ..."
