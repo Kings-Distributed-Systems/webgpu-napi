@@ -11,3 +11,6 @@
 	path = cts
 	url = https://github.com/Kings-Distributed-Systems/cts
 	branch = cts-napi
+[submodule "tfjs"]
+	path = tfjs
+	url = https://github.com/tensorflow/tfjs.git

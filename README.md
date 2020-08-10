@@ -60,15 +60,12 @@ In case python wasn't found:
 
 ### Linux 
 
-Linux has a streamlined method to integrate with CTS testing:
+Linux has a streamlined superbuild to integrate with CTS and TFjs testing:
+- git clone --recursive https://github.com/Kings-Distributed-Systems/webgpu-napi.git
 - Run the build.sh script
 - This will build against a NAPI stable version of Dawn
 - Will also set your LD\_LIBRARY\_PATH to the built Dawn shared libraries
 - Copy the built addon eg: 
-
-````
-cp generated/0.0.1/linux/build/Release/addon-linux.node ~/git/cts/third_party/dawn/linux/index.node
-````
 
 
 ### MacOS

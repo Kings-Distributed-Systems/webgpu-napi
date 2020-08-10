@@ -11,26 +11,7 @@ set -e
 OS="$(uname -s)"
 echo "Building Dawn on OS \"${OS}\"..."
 
-if [ ! -d depot_tools ]; then
-  echo "Cloning depot tools..."
-  git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-fi
-export PATH=${PWD}/depot_tools:$PATH
 
-if [ ! -d dawn ]; then
-  echo "Fetching Dawn..."
-  git clone https://dawn.googlesource.com/dawn dawn
-fi
-
-if [ ! -d examples ]; then
-  echo "Fetching examples..."
-  git clone https://github.com/maierfelix/webgpu-examples examples
-fi
-
-
-cd dawn
-echo "Checking out ..."
-git checkout 0b43a803bfb9fe4c426c7dbd7b618f61841dc47c
 
 if [ "${OS}" = "Linux" ]; then
   echo "Installing Linux build dependencies..."
