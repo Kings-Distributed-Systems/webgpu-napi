@@ -11,7 +11,9 @@ set -e
 OS="$(uname -s)"
 echo "Building Dawn on OS \"${OS}\"..."
 
+export PATH=${PWD}/depot_tools:$PATH
 
+cd dawn
 
 if [ "${OS}" = "Linux" ]; then
   echo "Installing Linux build dependencies..."
