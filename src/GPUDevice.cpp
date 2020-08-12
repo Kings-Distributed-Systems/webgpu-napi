@@ -303,7 +303,7 @@ Napi::Value GPUDevice::createCommandEncoder(const Napi::CallbackInfo &info) {
   std::vector<napi_value> args = {
     info.This().As<Napi::Value>()
   };
-  if (info[0].IsObject()) args.push_back(info[0].As<Napi::Value>());
+  args.push_back(Napi::Object::New(env).As<Napi::Value>());
   Napi::Object commandEncoder = GPUCommandEncoder::constructor.New(args);
   return commandEncoder;
 }

@@ -39,7 +39,7 @@ Napi::Value GPUCommandEncoder::beginComputePass(const Napi::CallbackInfo &info) 
   Napi::Env env = info.Env();
   Napi::Object computePass = GPUComputePassEncoder::constructor.New({
     info.This().As<Napi::Value>(),
-    info[0].As<Napi::Value>()
+    Napi::Object::New(env).As<Napi::Value>()
   });
   return computePass;
 }
