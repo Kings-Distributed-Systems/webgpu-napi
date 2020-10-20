@@ -1,7 +1,7 @@
 {
-  "name": "webgpu",
+  "name": "webgpu-napi",
   "main": "index.js",
-  "version": "0.1.13",
+  "version": "0.1.0",
   "engines": {
     "node": ">= 13.0.0"
   },
@@ -24,10 +24,10 @@
     "nunjucks": "^3.2.0"
   },
   "dependencies": {},
-  "description": "WebGPU for Node [WIP]",
+  "description": "WebGPU-NAPI",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maierfelix/webgpu.git"
+    "url": "git+https://github.com/Kings-Distributed-Systems/webgpu-napi"
   },
   "keywords": [
     "webgpu",
@@ -36,12 +36,12 @@
     "gpu",
     "gpgpu"
   ],
-  "author": "Felix Maier",
+  "author": "Dominic Cerisano",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maierfelix/webgpu/issues"
+    "url": "https://github.com/Kings-Distributed-Systems/webgpu-napi/issues"
   },
-  "homepage": "https://github.com/maierfelix/webgpu#readme",
+  "homepage": "https://github.com/Kings-Distributed-Systems/webgpu-napi#readme",
   "directories": {
     "example": "examples",
     "lib": "lib",

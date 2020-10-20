@@ -121,3 +121,7 @@ examples-dev
 lib
 src
 generator
+cts
+dawn
+depot_tools
+examples
