@@ -14,6 +14,3 @@
 [submodule "tfjs"]
 	path = tfjs
 	url = https://github.com/tensorflow/tfjs.git
-[submodule "webidl-napi"]
-	path = webidl-napi
-	url = https://github.com/Kings-Distributed-Systems/webgpu-napi
